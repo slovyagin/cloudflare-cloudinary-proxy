@@ -9,9 +9,7 @@
   "author": "Wes Bos <wesbos@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "prettier": "^1.19.1"
-  },
-  "dependencies": {
-    "@cloudflare/wrangler": "^1.14.0"
+    "prettier": "^1.19.1",
+    "wrangler": "^3.78.7"
   }
 }

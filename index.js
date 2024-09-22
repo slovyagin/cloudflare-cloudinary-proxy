@@ -18,12 +18,13 @@ function parseCustomUrl(url) {
   const params = new URLSearchParams(url.search);
 
   let transformations = "c_fit,q_auto";
-  if (params.has("w")) transformations += `,w_${params.get("w")}`;
-  if (params.has("h")) transformations += `,h_${params.get("h")}`;
+  if (params.has("s")) {
+    const size = params.get("s");
+    transformations += `,w_${size},h_${size}`;
+  }
 
-  // Remove w and h from params as we've handled them
-  params.delete("w");
-  params.delete("h");
+  // Remove s from params as we've handled it
+  params.delete("s");
 
   const cloudinaryPath = `upload/${transformations}/v1/photos/${imageName}`;
   const remainingParams = params.toString();
@@ -50,7 +51,7 @@ async function serveAsset(event) {
     });
 
     const headers = new Headers(response.headers);
-    headers.set("cache-control", `public, max-age=${30 * 24 * 60 * 60}`);
+    headers.set("cache-control", `public, max-age=${365 * 24 * 60 * 60}`);
     headers.set("vary", "Accept, Referer");
     response = new Response(response.body, { ...response, headers });
     event.waitUntil(cache.put(event.request, response.clone()));
